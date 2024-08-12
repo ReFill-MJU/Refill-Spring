@@ -28,7 +28,7 @@ public class LoginServiceImpl implements LoginService {
     @Value("${oauth2.user-info-uri}")
     private String userInfoUri;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
