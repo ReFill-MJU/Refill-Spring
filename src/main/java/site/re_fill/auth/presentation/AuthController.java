@@ -1,5 +1,6 @@
 package site.re_fill.auth.presentation;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,10 @@ public class AuthController {
 
     private final LoginService loginService;
 
+    @Operation(
+            summary = "로그인",
+            description = "로그인합니당ㅋㅋ"
+    )
     @PostMapping("/login")
     public ResponseEntity<JwToken> callBack(
             @RequestBody final OAuthToken request
