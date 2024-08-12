@@ -1,6 +1,7 @@
 package site.re_fill.childcare.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,6 +13,7 @@ import site.re_fill.childcare.application.ChildcareService;
 import site.re_fill.childcare.dto.request.Question;
 import site.re_fill.childcare.dto.response.Answer;
 
+@Tag(name = "보육 API", description = "보육 관련 API")
 @RestController
 @RequiredArgsConstructor
 public class ChildcareController {
