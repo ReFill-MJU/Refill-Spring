@@ -16,6 +16,7 @@ import site.re_fill.childcare.dto.GptMessage;
 import site.re_fill.childcare.dto.GptResponse;
 import site.re_fill.childcare.dto.request.Question;
 import site.re_fill.childcare.dto.response.Answer;
+import site.re_fill.childcare.dto.response.SummaryAnswer;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -51,14 +52,22 @@ public class ChildcareServiceImpl implements ChildcareService {
         Child child = childModuleService.findChildById(childId);
 
         List<GptMessage> messages = createGptMessages(child, request);
-
         HashMap<String, Object> requestBody = createRequestBody(messages);
-
         GptResponse chatGptRes = getResponse(createHttpEntity(requestBody));
-
         String response = chatGptRes.choices().get(0).message().content();
-
         return Answer.of(response);
+    }
+
+    @Override
+    public SummaryAnswer interpretPersonality(final Long childId) {
+        Child child = childModuleService.findChildById(childId);
+        Question request = Question.of(child.getAnswer1(), child.getAnswer2(), child.getAnswer3());
+
+        List<GptMessage> messages = createPersonalityGptMessages(request);
+        HashMap<String, Object> requestBody = createRequestBody(messages);
+        GptResponse chatGptRes = getResponse(createHttpEntity(requestBody));
+        String response = chatGptRes.choices().get(0).message().content();
+        return SummaryAnswer.from(response);
     }
 
     private byte[] convertTextToSpeech(final String text) {
@@ -99,6 +108,20 @@ public class ChildcareServiceImpl implements ChildcareService {
             throw new RuntimeException("TTS 변환 실패: " + response.getStatusCode());
         }
     }
+
+    private static List<GptMessage> createPersonalityGptMessages(final Question request) {
+        List<GptMessage> messages = new ArrayList<>();
+
+        // gpt 역할(프롬프트) 설정
+        messages.add(GptMessage.of(GptConstant.SYSTEM, GptConstant.PROMPT_PERSONALITY_SUMMARY));
+
+        // 실제 요청
+        messages.add(GptMessage.of(GptConstant.USER, request.data()));
+
+
+        return messages;
+    }
+
 
     // GPT 에 요청할 메시지를 만드는 메서드
     private static List<GptMessage> createGptMessages(final Child child, final Question request) {
