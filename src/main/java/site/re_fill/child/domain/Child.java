@@ -64,8 +64,8 @@ public class Child {
     }
 
     public String getKoreanAge() {
-        return switch (this.age) {
-            case 1 -> "살";
+        return switch (this.age + 1) {
+            case 1 -> "한살";
             case 2 -> "두살";
             case 3 -> "세살";
             case 4 -> "네살";

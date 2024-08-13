@@ -118,7 +118,6 @@ public class ChildcareServiceImpl implements ChildcareService {
         // 실제 요청
         messages.add(GptMessage.of(GptConstant.USER, request.data()));
 
-
         return messages;
     }
 
