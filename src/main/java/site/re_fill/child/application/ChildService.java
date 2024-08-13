@@ -12,5 +12,5 @@ public interface ChildService {
 
     GetChildren getChildren(Long authId);
 
-    void updateAnswer(Long childId, Integer answerNumber, UpdateAnswer updateAnswer);
+    String updateAnswer(Long childId, Integer answerNumber, UpdateAnswer updateAnswer);
 }

@@ -61,13 +61,13 @@ public class ChildController {
             description = "내 아이의 질문 답변을 등록합니다."
     )
     @PatchMapping("/child/{childId}/answer/{answerNumber}")
-    public ResponseEntity<Void> updateAnswer(
+    public ResponseEntity<String> updateAnswer(
             @AuthenticationPrincipal final AuthDto auth,
             @PathVariable("childId") final Long childId,
             @PathVariable("answerNumber") final Integer answerNumber,
             @RequestBody final UpdateAnswer updateAnswer
     ) {
-        childService.updateAnswer(childId, answerNumber, updateAnswer);
-        return ResponseEntity.ok().build();
+        String name = childService.updateAnswer(childId, answerNumber, updateAnswer);
+        return ResponseEntity.ok(name);
     }
 }

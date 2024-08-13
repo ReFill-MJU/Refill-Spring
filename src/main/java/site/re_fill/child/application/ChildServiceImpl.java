@@ -49,8 +49,9 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     @Transactional
-    public void updateAnswer(final Long childId, final Integer answerNumber, final UpdateAnswer updateAnswer) {
+    public String updateAnswer(final Long childId, final Integer answerNumber, final UpdateAnswer updateAnswer) {
         Child child = childModuleService.findChildById(childId);
         child.updateAnswer(updateAnswer.answer(), answerNumber);
+        return child.getName();
     }
 }
