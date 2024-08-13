@@ -5,6 +5,11 @@ import lombok.*;
 import site.re_fill.common.domain.Gender;
 import site.re_fill.member.domain.Member;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,6 +20,8 @@ public class Child {
     private Long id;
 
     private String name;
+
+    private String birth;
 
     private Integer age;
 
@@ -34,8 +41,9 @@ public class Child {
     private Member member;
 
     @Builder
-    private Child(final String name, final Integer age, final Gender gender) {
+    private Child(final String name, final String birth, final Integer age, final Gender gender) {
         this.name = name;
+        this.birth = birth;
         this.age = age;
         this.gender = gender;
     }
@@ -49,5 +57,30 @@ public class Child {
             case 3:
                 this.answer3 = answer;
         }
+    }
+
+    public String getKoreanAge() {
+        return switch (this.age) {
+            case 1 -> "살";
+            case 2 -> "두살";
+            case 3 -> "세살";
+            case 4 -> "네살";
+            case 5 -> "다섯살";
+            case 6 -> "여섯살";
+            default -> "유치원 갈 나이";
+        };
+    }
+
+    public Long getDBirth() {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
+            Date date = formatter.parse(this.birth);
+            Date currentDate = new Date();
+            long differenceInMillis = currentDate.getTime() - date.getTime();
+            return TimeUnit.DAYS.convert(differenceInMillis, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
