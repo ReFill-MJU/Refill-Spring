@@ -5,13 +5,13 @@ import site.re_fill.common.domain.Gender;
 
 public record CreateChild(
         String name,
-        Integer age,
+        String birth,
         Gender gender
 ) {
     public Child toEntity() {
         return Child.builder()
                 .name(name)
-                .age(age)
+                .birth(birth)
                 .gender(gender)
                 .build();
     }

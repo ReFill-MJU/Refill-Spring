@@ -27,6 +27,7 @@ public class ChildServiceImpl implements ChildService {
     @Transactional
     public void createChild(final Long authId, final CreateChild request) {
         Child child = request.toEntity();
+        child.updateAge((int) (child.getDBirth() / 365));
         child.setMember(memberModuleService.findMemberById(authId)
                 .orElseThrow(RuntimeException::new));
         childModuleService.saveChild(request.toEntity());

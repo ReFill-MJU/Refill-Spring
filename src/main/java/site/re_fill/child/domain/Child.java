@@ -59,6 +59,10 @@ public class Child {
         }
     }
 
+    public void updateAge(final Integer age) {
+        this.age = age;
+    }
+
     public String getKoreanAge() {
         return switch (this.age) {
             case 1 -> "살";
