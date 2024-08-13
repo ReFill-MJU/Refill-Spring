@@ -17,8 +17,6 @@ import site.re_fill.childcare.dto.GptResponse;
 import site.re_fill.childcare.dto.request.Question;
 import site.re_fill.childcare.dto.response.Answer;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -60,9 +58,7 @@ public class ChildcareServiceImpl implements ChildcareService {
 
         String response = chatGptRes.choices().get(0).message().content();
 
-        byte[] mp3Audio = convertTextToSpeech(response);
-
-        return Answer.of(response, mp3Audio);
+        return Answer.of(response);
     }
 
     private byte[] convertTextToSpeech(final String text) {
