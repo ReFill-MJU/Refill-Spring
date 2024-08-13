@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.re_fill.auth.dto.AuthDto;
 import site.re_fill.child.application.ChildService;
+import site.re_fill.child.dto.SimpleChildDto;
 import site.re_fill.child.dto.request.CreateChild;
 import site.re_fill.child.dto.request.UpdateAnswer;
 import site.re_fill.child.dto.response.GetChild;
@@ -25,12 +26,11 @@ public class ChildController {
             description = "관리할 아이의 정보를 입력받아 추가합니다."
     )
     @PostMapping("/child")
-    public ResponseEntity<Void> create(
+    public ResponseEntity<Long> create(
             @AuthenticationPrincipal final AuthDto auth,
             @RequestBody final CreateChild createChild
     ) {
-        childService.createChild(auth.id(), createChild);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(childService.createChild(auth.id(), createChild));
     }
 
     @Operation(
@@ -61,13 +61,12 @@ public class ChildController {
             description = "내 아이의 질문 답변을 등록합니다."
     )
     @PatchMapping("/child/{childId}/answer/{answerNumber}")
-    public ResponseEntity<String> updateAnswer(
+    public ResponseEntity<SimpleChildDto> updateAnswer(
             @AuthenticationPrincipal final AuthDto auth,
             @PathVariable("childId") final Long childId,
             @PathVariable("answerNumber") final Integer answerNumber,
             @RequestBody final UpdateAnswer updateAnswer
     ) {
-        String name = childService.updateAnswer(childId, answerNumber, updateAnswer);
-        return ResponseEntity.ok(name);
+        return ResponseEntity.ok(childService.updateAnswer(childId, answerNumber, updateAnswer));
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import site.re_fill.age.application.WelfareModuleService;
 import site.re_fill.child.domain.Child;
 import site.re_fill.child.dto.ChildDto;
+import site.re_fill.child.dto.SimpleChildDto;
 import site.re_fill.child.dto.request.CreateChild;
 import site.re_fill.child.dto.request.UpdateAnswer;
 import site.re_fill.child.dto.response.GetChild;
@@ -25,12 +26,13 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     @Transactional
-    public void createChild(final Long authId, final CreateChild request) {
+    public Long createChild(final Long authId, final CreateChild request) {
         Child child = request.toEntity();
         child.updateAge((int) (child.getDBirth() / 365));
         child.setMember(memberModuleService.findMemberById(authId)
                 .orElseThrow(RuntimeException::new));
-        childModuleService.saveChild(child);
+        return childModuleService.saveChild(child).getId();
+
     }
 
     @Override
@@ -49,9 +51,9 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     @Transactional
-    public String updateAnswer(final Long childId, final Integer answerNumber, final UpdateAnswer updateAnswer) {
+    public SimpleChildDto updateAnswer(final Long childId, final Integer answerNumber, final UpdateAnswer updateAnswer) {
         Child child = childModuleService.findChildById(childId);
         child.updateAnswer(updateAnswer.answer(), answerNumber);
-        return child.getName();
+        return SimpleChildDto.of(child);
     }
 }
