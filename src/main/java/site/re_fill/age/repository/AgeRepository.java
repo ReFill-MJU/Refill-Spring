@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface AgeRepository extends JpaRepository<Age, Long> {
 
-    Optional<Age> findByValue(int age);
+    Optional<Age> findByValue(final Integer age);
 
     List<Age> findAllByValue(final int age);
 }

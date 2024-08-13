@@ -7,7 +7,7 @@ import java.util.List;
 public interface ChildModuleService {
     Child findChildById(Long childId);
 
-    Child saveChild(Child child);
+    Long saveChild(Child child);
 
     List<Child> findAllByMemberId(Long memberId);
 }

@@ -20,8 +20,8 @@ public class ChildModuleServiceImpl implements ChildModuleService {
     }
 
     @Override
-    public Child saveChild(final Child child) {
-        return childRepository.save(child);
+    public Long saveChild(final Child child) {
+        return childRepository.save(child).getId();
     }
 
     @Override

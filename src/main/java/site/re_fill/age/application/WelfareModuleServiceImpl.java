@@ -1,6 +1,7 @@
 package site.re_fill.age.application;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.re_fill.age.domain.Age;
 import site.re_fill.age.domain.Business;
@@ -9,6 +10,7 @@ import site.re_fill.age.repository.BusinessRepository;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WelfareModuleServiceImpl implements WelfareModuleService {

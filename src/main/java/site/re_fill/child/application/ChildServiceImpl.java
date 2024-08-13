@@ -31,14 +31,14 @@ public class ChildServiceImpl implements ChildService {
         child.updateAge((int) (child.getDBirth() / 365));
         child.setMember(memberModuleService.findMemberById(authId)
                 .orElseThrow(RuntimeException::new));
-        return childModuleService.saveChild(child).getId();
+        return childModuleService.saveChild(child);
 
     }
 
     @Override
     public GetChild getChild(final Long childId) {
         Child child = childModuleService.findChildById(childId);
-        String comment = welfareModuleService.findAgeByValue(child.getAge()).getComment();
+        String comment = welfareModuleService.findAgeByValue(child.getAge() + 1).getComment();
 
         return GetChild.of(ChildDto.of(child, comment));
     }
