@@ -30,7 +30,7 @@ public class ChildServiceImpl implements ChildService {
         child.updateAge((int) (child.getDBirth() / 365));
         child.setMember(memberModuleService.findMemberById(authId)
                 .orElseThrow(RuntimeException::new));
-        childModuleService.saveChild(request.toEntity());
+        childModuleService.saveChild(child);
     }
 
     @Override
