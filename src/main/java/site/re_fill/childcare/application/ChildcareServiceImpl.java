@@ -129,7 +129,7 @@ public class ChildcareServiceImpl implements ChildcareService {
         // gpt 역할(프롬프트) 설정
         messages.add(GptMessage.of(GptConstant.SYSTEM,
                 GptConstant.PROMPT_FRONT +
-                        "나이:" + child.getAge() +
+                        "나이:" + (child.getAge() + 1) +
                         "성격:" + child.getAnswer1() +
                         "알레르기 질환:" + child.getAnswer2() +
                         "좋아하는 것과 싫어하는 것:" + child.getAnswer3() +
