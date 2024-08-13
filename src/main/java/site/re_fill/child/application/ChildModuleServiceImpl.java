@@ -14,6 +14,12 @@ public class ChildModuleServiceImpl implements ChildModuleService {
     private final ChildRepository childRepository;
 
     @Override
+    public Child findChildById(final Long childId) {
+        return childRepository.findById(childId)
+                .orElseThrow(RuntimeException::new);
+    }
+
+    @Override
     public Child saveChild(final Child child) {
         return childRepository.save(child);
     }

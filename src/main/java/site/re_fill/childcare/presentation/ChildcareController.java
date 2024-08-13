@@ -5,9 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.re_fill.auth.dto.AuthDto;
 import site.re_fill.childcare.application.ChildcareService;
 import site.re_fill.childcare.dto.request.Question;
@@ -24,11 +22,12 @@ public class ChildcareController {
             summary = "보육 GPT 질문",
             description = "보육 정보를 학습한 GPT를 통해 질문합니다."
     )
-    @PostMapping("/childcare/test")
+    @PostMapping("/childcare/{childId}/test")
     public ResponseEntity<Answer> interpretQuestion(
             @AuthenticationPrincipal final AuthDto auth,
+            @PathVariable("childId") Long childId,
             @RequestBody final Question question
     ) {
-        return ResponseEntity.ok(childcareService.interpretQuestion(question));
+        return ResponseEntity.ok(childcareService.interpretQuestion(childId, question));
     }
 }

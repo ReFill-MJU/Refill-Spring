@@ -6,10 +6,13 @@ import lombok.Builder;
 @Builder
 public record Answer(
         @Lob
-        String data
+        String data,
+        byte[] mp3Audio
 ) {
-    public static Answer of(final String data) {
+    public static Answer of(final String data, final byte[] mp3Audio) {
         return Answer.builder()
-                .data(data).build();
+                .data(data)
+                .mp3Audio(mp3Audio)
+                .build();
     }
 }

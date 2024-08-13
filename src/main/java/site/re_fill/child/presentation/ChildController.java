@@ -5,13 +5,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.re_fill.auth.dto.AuthDto;
 import site.re_fill.child.application.ChildService;
 import site.re_fill.child.dto.request.CreateChild;
+import site.re_fill.child.dto.request.UpdateAnswer;
+import site.re_fill.child.dto.response.GetChild;
 import site.re_fill.child.dto.response.GetChildren;
 
 @Tag(name = "아이 API", description = "아이 관련 API")
@@ -27,8 +26,8 @@ public class ChildController {
     )
     @PostMapping("/child")
     public ResponseEntity<Void> create(
-            @AuthenticationPrincipal AuthDto auth,
-            @RequestBody CreateChild createChild
+            @AuthenticationPrincipal final AuthDto auth,
+            @RequestBody final CreateChild createChild
     ) {
         childService.createChild(auth.id(), createChild);
         return ResponseEntity.ok().build();
@@ -40,10 +39,35 @@ public class ChildController {
     )
     @GetMapping("/child")
     public ResponseEntity<GetChildren> getChildren(
-            @AuthenticationPrincipal AuthDto auth
+            @AuthenticationPrincipal final AuthDto auth
     ) {
         return ResponseEntity.ok(childService.getChildren(auth.id()));
     }
 
+    @Operation(
+            summary = "내 아이 상세 조회",
+            description = "내 아이의 상세정보를 받아옵니다."
+    )
+    @GetMapping("/child/{childId}")
+    public ResponseEntity<GetChild> getChildren(
+            @AuthenticationPrincipal final AuthDto auth,
+            @PathVariable("childId") final Long childId
+    ) {
+        return ResponseEntity.ok(childService.getChild(childId));
+    }
 
+    @Operation(
+            summary = "내 아이 질문 업데이트",
+            description = "내 아이의 질문 답변을 등록합니다."
+    )
+    @PatchMapping("/child/{childId}/answer/{answerNumber}")
+    public ResponseEntity<Void> updateAnswer(
+            @AuthenticationPrincipal final AuthDto auth,
+            @PathVariable("childId") final Long childId,
+            @PathVariable("answerNumber") final Integer answerNumber,
+            @RequestBody final UpdateAnswer updateAnswer
+    ) {
+        childService.updateAnswer(childId, answerNumber, updateAnswer);
+        return ResponseEntity.ok().build();
+    }
 }

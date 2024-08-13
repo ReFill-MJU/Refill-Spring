@@ -1,4 +1,4 @@
-package site.re_fill.welfare.domain;
+package site.re_fill.age.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,19 +12,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Welfare {
+public class Age {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String backup;
+    private Integer value;
 
-    private Integer age;
+    private String comment;
 
     @Builder
-    private Welfare(final String backup, final Integer age) {
-        this.backup = backup;
-        this.age = age;
+    private Age(final Integer value, final String comment) {
+        this.value = value;
+        this.comment = comment;
     }
 }

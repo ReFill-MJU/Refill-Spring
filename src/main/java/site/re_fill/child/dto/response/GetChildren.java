@@ -1,17 +1,19 @@
 package site.re_fill.child.dto.response;
 
 import lombok.Builder;
-import site.re_fill.child.dto.ChildDto;
+import site.re_fill.child.domain.Child;
 
 import java.util.List;
 
 @Builder
 public record GetChildren(
-        List<ChildDto> children
+        List<String> children
 ) {
-    public static GetChildren of(List<ChildDto> children) {
+    public static GetChildren of(List<Child> children) {
         return GetChildren.builder()
-                .children(children)
+                .children(children.stream()
+                        .map(Child::getName)
+                        .toList())
                 .build();
     }
 }
